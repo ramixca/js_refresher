@@ -17,23 +17,85 @@ const options =["rock", "paper", "scissors"];
 
 
 // ComputerChoice randomize 
-function getComputerChoice(options) {
+function getComputerChoice() {
     const randomOption = Math.floor(Math.random() * options.length);
     return options[randomOption];    
 };
 
 
-// using prompt for human player to make a selection from const options.
+function getHumanChoice(humanChoiceInput) {
+    return humanChoiceInput.trim().toLowerCase();
+};
+
+//Running 
+// console.log("Human Choice: ", humanChoiceInput);
+// console.log("Computer Choice: ", getComputerChoice(options));
+
+//Game rules to determine winner per round.
+function gameRules(getHumanChoiceInput,getComputerChoiceInput) {
+    if (getHumanChoiceInput === getComputerChoiceInput) {
+        return "tablas! It's a tie!";
+    } else if (
+        (getHumanChoiceInput === "rock" && getComputerChoiceInput === "scissors") ||
+        (getHumanChoiceInput === "paper" && getComputerChoiceInput === "rock") ||
+        (getHumanChoiceInput === "scissors" && getComputerChoiceInput === "paper")
+    ) {
+        humanScore++;
+        return "You win human!";
+    } else {
+        computerScore++;
+        return "Computer wins! You lose human :(";
+    }
+};
+
+// Setup single game round
+
+function playRound() {
+    // using prompt for human player to make a selection from const options.
 let humanChoice = prompt("Choose wisely... Rock, paper or scissors?");
 // Store input from prompt for function GetHumanChoice using  humanChoice variable as a parameter.
 let humanChoiceInput = getHumanChoice(humanChoice)
+    //Check if human input is not one of the options.
+    if(!options.includes(humanChoiceInput)) {
+        console.log("Invalid choice! Please, choose Rock, Paper, or Scissors!");
+        return;
+    }
+    let computerChoice = getComputerChoice();
+    let result = gameRules(humanChoiceInput, computerChoice);
+
+    console.log("Human Choice:", humanChoiceInput);
+    console.log("Computer Choice:", computerChoice);
+    console.log(result);
+    // updated single game round to track score. I will use for the function to run multiple game rounds.
+    console.log("Current Score... Human: " + humanScore + " vs Computer: " + computerScore);
+};
+
+playRound();
 
 
-function getHumanChoice(humanChoiceInput) {
-    return humanChoiceInput.trim().toLowerCase();
-}
+//Setup game for 5 rounds.
+//When running playGame and human makes a selection, it repeats the same selection 5 times. It doesn't allow to add different selections per round. 
+function playGame() {
+    
+    for (let i = 0; i < 5; i++) {
+        console.log(`\nRound ${i + 1}`);
+        playRound();
+    }
 
-//Running 
-console.log("Human Choice: ", humanChoiceInput);
-console.log("Computer Choice: ", getComputerChoice(options));
+        // After all rounds are done, show final scores
+        console.log("\nFinal Score:");
+        console.log("Human:", humanScore);
+        console.log("Computer:", computerScore);
+    
+        if (humanScore > computerScore) {
+            console.log("Congratulations! You won the game!");
+        } else if (humanScore < computerScore) {
+            console.log("Sorry, you lost the game. Better luck next time!");
+        } else {
+            console.log("It's a tie!");
+        }
+    };
 
+
+
+playGame();
