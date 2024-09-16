@@ -9,14 +9,31 @@ console.log("hello");
 // 4. Rules: Rock beats scissors and loses to paper, paper beats rock, but loses to scissors, and scissors beat paper but loses to rock.
 // 5. When a round is finished, increase score by +1. In order to win, a player must score 5 points.
 
+
+// Initial Scores for human and computer players
 let humanScore = 0;
 let computerScore = 0;
+const options =["rock", "paper", "scissors"];
 
-const options  = ["rock", "paper", "scissors"];
 
+// ComputerChoice randomize 
 function getComputerChoice(options) {
     const randomOption = Math.floor(Math.random() * options.length);
     return options[randomOption];    
 };
 
-console.log(getComputerChoice(options));
+
+// using prompt for human player to make a selection from const options.
+let humanChoice = prompt("Choose wisely... Rock, paper or scissors?");
+// Store input from prompt for function GetHumanChoice using  humanChoice variable as a parameter.
+let humanChoiceInput = getHumanChoice(humanChoice)
+
+
+function getHumanChoice(humanChoiceInput) {
+    return humanChoiceInput.trim().toLowerCase();
+}
+
+//Running 
+console.log("Human Choice: ", humanChoiceInput);
+console.log("Computer Choice: ", getComputerChoice(options));
+
